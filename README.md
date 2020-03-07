@@ -1,2 +1,9 @@
 # A3
-Enable AMD GPU on Apple device for A.I. training and inference
+Enable training deep learning models on Apple device
+
+## Strategy
+
+Metal -> Objective-C -> Python
+
+The Objective-C and Python bridge is built with PyObjC.
+
