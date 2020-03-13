@@ -75,9 +75,22 @@ struct objcpp_test {
         return;
     }
 
-    void run_metal() {
-        [adder prepareData];
-        [adder sendComputeCommand];
+    void run_metal(py::array_t<float> a, py::array_t<float> b, py::array_t<float> r) {
+        unsigned int len = a.size();
+
+        assert(a.size() == b.size());
+        assert(a.size() == r.size());
+
+        auto a_info = a.request();
+        auto b_info = b.request();
+        auto r_info = r.request();
+
+        float* array_a = (float*)a_info.ptr;
+        float* array_b = (float*)b_info.ptr;
+        float* array_r = (float*)r_info.ptr;
+
+        [adder sendComputeCommand:len array_a:array_a array_b:array_b array_r:array_r];
+        
         NSLog(@"Execution finished.");
     }
 
