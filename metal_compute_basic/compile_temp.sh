@@ -1,0 +1,1 @@
+c++ -iframework /Users/lucas/Library/Frameworks -framework Foundation -framework Metal -framework ComputingMetal -O3 -Wall -shared -std=c++11 -undefined dynamic_lookup `python3 -m pybind11 --includes` objcpt.mm -o objcpt`python3-config --extension-suffix`

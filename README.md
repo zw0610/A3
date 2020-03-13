@@ -1,9 +1,13 @@
 # A3
-Enable training deep learning models on Apple device
+
+I'm trying to enable DL training on macOS device with AMD GPUs.
 
 ## Strategy
 
-Metal -> Objective-C -> Python
+Metal -> Objective-C++ -> -> pybind11 -> Python
 
-The Objective-C and Python bridge is built with PyObjC.
+## Steps
 
+1. convert *MetalComputeBasic* example from Apple into a Python binding one
+
+2. TBD
