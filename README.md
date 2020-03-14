@@ -1,6 +1,6 @@
 # A3
 
-I'm trying to enable DL training on macOS device with AMD GPUs.
+I'm trying to enable DL training on macOS device with accelerators, such as AMD and Intel GPUs.
 
 ## Strategy
 
