@@ -4,10 +4,18 @@ I'm trying to enable DL training on macOS device with accelerators, such as AMD 
 
 ## Strategy
 
-Metal -> Objective-C++ -> -> pybind11 -> Python
+Metal -> Objective-C++ -> pybind11 -> Numpy
+
+Metal -> Objective-C++ -> Aten -> PyTorch 
 
 ## Steps
 
-1. convert *MetalComputeBasic* example from Apple into a Python binding one
+### POC
 
-2. TBD
+convert *MetalComputeBasic* example from Apple into a Python binding one
+
+### PyTorch with Metal
+
+1. ATen storage related APIs
+2. Metal version for arithemtic ops
+3. Python APIs for Metal
