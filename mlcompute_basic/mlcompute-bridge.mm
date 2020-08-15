@@ -15,13 +15,47 @@
 
 namespace py = pybind11;
 
-struct objcpp_test {
-    float *buff_a, *buff_b, *buff_c;
-    size_t len_a, len_b, len_c;
-    id<MTLDevice> device;
+auto to_cstr = [](NSString * nss){return [nss UTF8String];};
 
-    MetalAdder* adder;
+MLCTensor* CreateMLCTensor(std::vector<int> &shape_vec, MLCDataType dtype) {
+    NSMutableArray *shape_nsma = [[NSMutableArray alloc] init];
+    for (int i = 0; i < shape_vec.size(); i++) {
+        [shape_nsma addObject:[NSNumber numberWithInt:shape_vec[i]]];
+    }
+    NSArray *shape_nsa = [shape_nsma copy];
+    MLCTensorDescriptor *md = [MLCTensorDescriptor descriptorWithShape:shape_nsa dataType:dtype];
+    return [MLCTensor tensorWithDescriptor:md];
+}
 
+template<typename T>
+MLCTensorData* CreateMLCTensorData(std::vector<T> &data) {
+    return [MLCTensorData dataWithImmutableBytesNoCopy:data.data() length:data.size()*sizeof(T)];
+}
+
+template<typename T>
+void PrintTensor(MLCTensorData * td) {
+    const T* ptr = (const T*)td.bytes;
+    for (size_t i = 0; i<(td.length/sizeof(T)); i++) {
+        std::cout << ptr[i] << " ";
+    }
+    std::cout << std::endl;
+}
+
+template <typename T>
+void PrintTensor(MLCTensor *t) {
+    const int bytes_count = (const int)t.descriptor.tensorAllocationSizeInBytes;
+    const int element_count = bytes_count / sizeof(T);
+    std::vector<T> temp(element_count);
+    [t copyDataFromDeviceMemoryToBytes:temp.data() length:bytes_count synchronizeWithDevice:true];
+    std::cout << to_cstr(t.className) << " " << to_cstr(t.label) << " : ";
+    for (auto x : temp) {
+        std::cout << x << " ";
+    }
+    std::cout << std::endl;
+}
+
+struct mlc_tensor {
+    MLCTensor *
 
     objcpp_test() {
         buff_a = nullptr;

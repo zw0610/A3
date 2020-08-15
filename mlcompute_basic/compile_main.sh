@@ -1,0 +1,1 @@
+c++ -framework Foundation -framework MLCompute -O3 -Wall -shared -std=c++11 -undefined dynamic_lookup `python3 -m pybind11 --includes` mlcompute-bridge.mm -o mlcompute`python3-config --extension-suffix`
