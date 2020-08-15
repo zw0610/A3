@@ -76,7 +76,7 @@ struct mlc_tensor {
 PYBIND11_MODULE(mlcompute, mlc) {
     mlc.doc() = "pybind11 objective-c++ mixing test";
 
-    py::class_<mlc_tensor>(ml, "mlc_tensor")
+    py::class_<mlc_tensor>(mlc, "mlc_tensor")
         .def(py::init<std::vector<int>, const std::string &>())
         .def("print", &mlc_tensor::print);
 }
